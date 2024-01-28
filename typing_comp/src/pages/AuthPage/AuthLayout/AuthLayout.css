@@ -1,0 +1,6 @@
+.main-theme-authlayout{
+    background-color: var(--clr-secondary);
+    color: black;
+    border: 1px solid black;
+    margin: 0 1rem;
+}

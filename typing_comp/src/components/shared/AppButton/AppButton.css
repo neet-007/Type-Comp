@@ -1,11 +1,20 @@
-.app-button__button{
+.main-theme-button{
     background: none;
     outline: none;
     border: 1px solid;
     padding: 0.7rem 1rem;
     cursor: pointer;
+    background-color: var(--clr-secondary);
+    color: black;
+    transition: background-color 200ms ease-in-out;
+    border-radius: 0.7rem;
+    border: 1px solid black;
 }
-.app-button__button-disabled{
+.main-theme-button:hover{
+    background-color: var(--clr-main-hover);
+    color: var(--clr-secondary);
+}
+.main-theme-button-disabled{
     color: gray;
     cursor:not-allowed;
     background: none;

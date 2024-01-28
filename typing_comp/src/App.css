@@ -1,12 +1,36 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+h1, h2, h3{
+  line-height: 1.7;
+}
+body{
+  padding: 0;
+  margin: 0;
+}
 :root{
-  --clr-primary:#0096c7;
+  --clr-main:#0096c7;
+  --clr-main-hover:#3d5a80;
+  --clr-dark:'';
+  --clr-dark-hover:'';
+  --clr-vaibrant:'';
+  --clr-vaibrant-hover:'';
+  --clr-calm:'';
+  --clr-calm-hover:'';
   --clr-secondary:#f1faee;
   --clr-warning:#e63946;
   --clr-success:#52b788;
 }
 
-.bg-primary{
-  background-color: var(--clr-primary);
+.main-theme{
+  background-color: var(--clr-main);
+  color: var(--clr-secondary);
+  min-height: 100dvh;
+}
+.bg-main{
+  background-color: var(--clr-main);
 }
 .bg-secondary{
   background-color: var(--clr-secondary);
@@ -17,8 +41,8 @@
 .bg-success{
   background-color: var(--clr-success);
 }
-.hover-primary{
-  background-color: var(--clr-primary);
+.hover-main{
+  background-color: var(--clr-main);
   color: var(--clr-secondary);
   transition: background-color 200ms ease-in-out;
 }
@@ -31,12 +55,12 @@
 .hover-success{
   background-color: var(--clr-success);
 }
-.hover-primary:hover{
+.hover-main:hover{
   background-color: var(--clr-secondary);
   color: black;
 }
 .hover-secondary:hover{
-  background-color: var(--clr-primary);
+  background-color: var(--clr-main);
   color: var(--clr-secondary);
 }
 .hover-warning :hover{
@@ -56,4 +80,11 @@
 }
 .text-wrong{
   background-color: var(--clr-warning);
+}
+.title{
+  font-size: 3rem;
+  font-weight: bold;
+}
+.cap{
+  text-transform: capitalize;
 }

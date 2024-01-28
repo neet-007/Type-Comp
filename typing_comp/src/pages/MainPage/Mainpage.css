@@ -1,0 +1,9 @@
+.main-theme-main-page{
+    background-color: var(--clr-main);
+    color: var(--clr-secondary);
+}
+.main-page-div{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}

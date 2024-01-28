@@ -4,13 +4,20 @@ import { useGameHook } from '../../../hooks/useGameHook'
 
 const InputText = forwardRef(({}, ref) => {
     const inputRef = useRef()
-    const {game, handleAction, counter, setLetterIndex} = useGameHook({inputRef, outputRef:ref})
+    const {handleAction, counter, length, prevData} = useGameHook({inputRef, outputRef:ref})
 
-    const handlekey = (e) => {
-      if (e.key === 'Backspace') return setLetterIndex(prev => prev - 1)
-      if (counter < 2) setLetterIndex(prev => prev + 1)
-      game()
-    }
+    /*if (inputRef.current !== undefined){
+      console.log(prevData)
+      console.log(inputRef.current.value)
+    }*/
+    /*if (counter >= 3 && inputRef.current !== undefined) {
+      inputRef.current.maxLength = length
+    }else if(counter >= 3 && inputRef.current !== undefined && inputRef.current.value.length === length){
+      inputRef.current.maxLength = length + 1
+    }else if (inputRef.current !== undefined) {
+      inputRef.current.maxLength = 524288
+    }*/
+
     return (
       <>
         <input type="text" ref={inputRef} onChange={handleAction}/>

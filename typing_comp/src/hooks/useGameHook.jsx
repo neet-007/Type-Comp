@@ -2,49 +2,58 @@ import { useState } from "react";
 
 export const useGameHook = ({outputRef, inputRef}) => {
     const [letterIndex, setLetterIndex] = useState(0)
-    const [counter, setCounter] = useState(0)
+    const [mistakeIndices, setMistakeIndices] = useState([])
     const [prevData, setPrevData] = useState('')
     //const outputChar = outputRef.current.children[letterIndex]
     //const inputWord = inputRef.current.value
 
     const game = (inputRefValue, outputRefChildren, outPutIndex) => {
        if (inputRefValue[inputRefValue.length - 1] === outputRefChildren[outPutIndex].innerText){
-            console.log(inputRefValue.length - 1)
-            if (counter >= 2) setCounter(prev => {if (prev - 1 === 0) return prev; return prev - 1})
-            outputRefChildren[outPutIndex].classList.remove('text-wrong')
-            if (inputRefValue[inputRefValue.length - 1] === ' ' && counter < 2) inputRef.current.value = ''
-
-        }else{
-            //console.log(prevData)
-            //console.log(inputRefValue)
-            console.log(inputRefValue.length + 1)
-            setCounter(prev => {
-                if (prev >=3) return prev
-                return prev + 1
+                setMistakeIndices(prev => {
+                const i = prev.indexOf(outPutIndex)
+                if (i > -1) prev = prev.splice(i, 1)
+                outputRefChildren[outPutIndex].classList.remove('text-wrong')
+                return prev.sort()
             })
-            outputRefChildren[outPutIndex].classList.add('text-wrong')
+            if (inputRefValue[inputRefValue.length - 1] === ' ' && mistakeIndices.length < 3) {
+                inputRef.current.value = ''
+                setPrevData('')
+            }
+        }else{
+            setMistakeIndices(prev => {
+                if (prev.length === 3 || prev.includes(outPutIndex)) return prev
+                prev.push(outPutIndex)
+                prev.sort()
+                return prev
+            })
+            if (outPutIndex >= mistakeIndices[0] || mistakeIndices[0] === undefined) outputRefChildren[outPutIndex].classList.add('text-wrong')
         }
     }
     const handleAction = () => {
         const outputRefChildren = outputRef.current.children
         const inputRefValue = inputRef.current.value
 
-        console.log(letterIndex)
-        //console.log(counter)
+        if (letterIndex + 1 === outputRefChildren.length && mistakeIndices.length === 0){
+            setLetterIndex(0)
+            setPrevData(0)
+            setMistakeIndices([])
+            inputRef.current.value = ''
+            alert('won')
+            return
+        }
+
         let condition;
         inputRef.current.value === '' ?
         condition = 'reset':
         prevData.length > inputRef.current.value.length ?
         condition = 'delete':''
 
-        //console.log(prevData)
-        //console.log(inputRef.current.value)
         switch (condition) {
             case 'reset':
-                setLetterIndex(0)
+                //setLetterIndex(0)
                 setPrevData('')
                 console.log('reste')
-                game(inputRefValue, outputRefChildren, letterIndex - 1)
+                game(inputRefValue, outputRefChildren, letterIndex)
                 break;
             case 'delete':
                 setLetterIndex(prev => prev - 1)
@@ -61,9 +70,7 @@ export const useGameHook = ({outputRef, inputRef}) => {
 
     return {
         handleAction,
-        counter,
-        prevData,
-        length:prevData.length
+        mistakeIndices
     }
 }
 //outputRef.current.children[inputRefIndex].classList.add('text-wrong')

@@ -1,0 +1,7 @@
+.gamepage-div{
+    display: flex;
+    gap: 3rem;
+    padding: 1rem;
+    justify-content: center;
+    flex-direction: column;
+}

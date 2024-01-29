@@ -1,9 +1,23 @@
 import { useState } from "react";
 
-export const useGameHook = ({outputRef, inputRef}) => {
+export const useGameHook = ({outputRef, inputRef, count, isRunning, setIsRunning, gameDetails, setGameDetails}) => {
     const [letterIndex, setLetterIndex] = useState(0)
     const [mistakeIndex, setMistakeIndex] = useState(undefined)
     const [prevData, setPrevData] = useState('')
+
+    const endGame = (outputRefChildren) => {
+        if (letterIndex + 1 === outputRefChildren.length && mistakeIndex === undefined){
+            setGameDetails({won:true, speed:Math.round((((letterIndex + 1) / count ) + Number.EPSILON) * 100) / 100})
+        }else{
+            setGameDetails({won:false, speed:Math.round((((letterIndex + 1) / count ) + Number.EPSILON) * 100) / 100})
+        }
+        setLetterIndex(0)
+        setPrevData(0)
+        setMistakeIndex(undefined)
+        setIsRunning(false)
+        inputRef.current.value = ''
+        return
+    }
 
     const game = (inputRefValue, outputRefChildren, outPutIndex) => {
        if (mistakeIndex !== undefined){
@@ -11,7 +25,7 @@ export const useGameHook = ({outputRef, inputRef}) => {
             setMistakeIndex(undefined)
             outputRefChildren[outPutIndex].classList.remove('text-wrong')
 
-            if (inputRefValue[inputRefValue.length - 1] === ' ' && mistakeIndex !== undefined) {
+            if (inputRefValue[inputRefValue.length - 1] === ' ' && mistakeIndex === undefined) {
                 inputRef.current.value = ''
                 setPrevData('')
             }
@@ -23,8 +37,8 @@ export const useGameHook = ({outputRef, inputRef}) => {
        if (inputRefValue[inputRefValue.length - 1] === outputRefChildren[outPutIndex].innerText){
             if (mistakeIndex !== undefined) setMistakeIndex(undefined)
             outputRefChildren[outPutIndex].classList.remove('text-wrong')
-
-            if (inputRefValue[inputRefValue.length - 1] === ' ' && mistakeIndex !== undefined) {
+            console.log(inputRefValue[inputRefValue.length - 1])
+            if (inputRefValue[inputRefValue.length - 1] === ' ' && mistakeIndex === undefined) {
                 inputRef.current.value = ''
                 setPrevData('')
             }
@@ -41,13 +55,8 @@ export const useGameHook = ({outputRef, inputRef}) => {
         const outputRefChildren = outputRef.current.children
         const inputRefValue = inputRef.current.value
 
-        if (letterIndex + 1 === outputRefChildren.length && mistakeIndex === undefined){
-            setLetterIndex(0)
-            setPrevData(0)
-            setMistakeIndex(undefined)
-            inputRef.current.value = ''
-            alert('won')
-            return
+        if ((letterIndex + 1 === outputRefChildren.length && mistakeIndex === undefined) || (count === 0)){
+            endGame(outputRefChildren)
         }
 
         let condition;
@@ -79,7 +88,9 @@ export const useGameHook = ({outputRef, inputRef}) => {
     return {
         handleAction,
         mistakeIndex,
-        indicator:letterIndex - mistakeIndex > -1 ? letterIndex - mistakeIndex: -1 * (letterIndex - mistakeIndex)
+        indicator:letterIndex - mistakeIndex > -1 ? letterIndex - mistakeIndex: -1 * (letterIndex - mistakeIndex),
+        gameDetails,
+        setGameDetails
     }
 }
 

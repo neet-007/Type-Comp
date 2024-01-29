@@ -1,18 +1,23 @@
 import React, {useRef } from 'react'
 import './OutputText.css'
 import InputText from '../InputText/InputText'
-import { useGameHook } from '../../../hooks/useGameHook'
+import { useGameContext } from '../../../context/GameContext'
 
-const OutputText = () => {
+const OutputText = ({count, isRunning, setIsRunning, gameDetails, setGameDetails}) => {
   const outputRef = useRef()
-  const fetchedData = 'this is an example'
-  const e = fetchedData.split("")
+  const {data, isLoading, isError, error} = useGameContext()
+
+  if (isLoading) return <h1>Loading...</h1>
+  if (isError){
+    console.log(error)
+  }
+  const e = data.text.split("")
   return (
     <>
      <div ref={outputRef}>{e.map((char, i) => {
         return <span key={char + i}>{char}</span>
       })}</div>
-    <InputText ref={outputRef}/>
+    <InputText ref={outputRef} count={count} isRunning={isRunning} setIsRunning={setIsRunning} gameDetails={gameDetails} setGameDetails={setGameDetails}/>
     </>
   )
 }

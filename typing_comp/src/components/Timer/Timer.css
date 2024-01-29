@@ -1,7 +1,6 @@
-.main-theme-authlayout{
+.timer-span{
+    padding: 0.5rem 1rem;
     background-color: var(--clr-secondary);
     color: black;
     border: 1px solid black;
-    margin: 0 2rem;
-    height: 100dvh;
 }

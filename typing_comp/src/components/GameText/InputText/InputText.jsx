@@ -2,9 +2,10 @@ import React, { useRef, forwardRef} from 'react'
 import './InputText.css'
 import { useGameHook } from '../../../hooks/useGameHook'
 
-const InputText = forwardRef(({}, ref) => {
+const InputText = forwardRef(({count, isRunning, setIsRunning, gameDetails, setGameDetails}, ref) => {
     const inputRef = useRef()
-    const {handleAction, mistakeIndex, indicator} = useGameHook({inputRef, outputRef:ref})
+    const {handleAction, mistakeIndex, indicator} = useGameHook({inputRef, outputRef:ref, count, isRunning, setIsRunning, gameDetails, setGameDetails})
+
 
     if (inputRef.current !== undefined){
       if (indicator > 3){

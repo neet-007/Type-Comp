@@ -1,0 +1,10 @@
+.footer-footer{
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+    margin-top: auto;
+}
+.footer-footer > span{
+    display: flex;
+    gap: 0.5rem;
+}

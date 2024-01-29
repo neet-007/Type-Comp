@@ -1,0 +1,17 @@
+.main-theme-profile-main-card{
+    background-color: var(--clr-secondary);
+    color: black;
+}
+.profile-main-card{
+    display: grid;
+    grid-template-columns: 30% 70%;
+    grid-template-areas:
+    'profile-img profile-details';
+    padding: 2rem 1rem;
+}
+.profile-main-card > img{
+    grid-area: profile-img;
+}
+.profile-main-card > div{
+    grid-area: profile-details;
+}

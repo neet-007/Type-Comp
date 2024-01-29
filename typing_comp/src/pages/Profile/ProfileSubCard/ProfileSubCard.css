@@ -1,0 +1,8 @@
+.main-theme-profile-sub-card-article{
+    background-color: var(--clr-secondary);
+    color: black;
+}
+.profile-sub-card-article{
+    width: 100%;
+    padding: 1rem;
+}

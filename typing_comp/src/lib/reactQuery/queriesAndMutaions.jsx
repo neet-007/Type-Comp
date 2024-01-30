@@ -1,5 +1,5 @@
 import {useQuery, useMutation} from '@tanstack/react-query'
-import { getTextChallenge, getUser, login, logout, postRace, postUserProfile, register } from '../axios/axios'
+import { getAuthUser, getTextChallenge, getUser, login, logout, postRace, postUserProfile, register } from '../axios/axios'
 
 export const useRegister = () => {
     return useMutation({
@@ -32,10 +32,17 @@ export const useGetUser = () => {
     })
 }
 
-export const useGetTextChallenge = () => {
+export const useGetAuthuser = () => {
+    return useQuery({
+        queryKey:['get-auth-user'],
+        queryFn:getAuthUser
+    })
+}
+
+export const useGetTextChallenge = ({oneWord, ancient}) => {
     return useQuery({
         queryKey:['text-challenge'],
-        queryFn: getTextChallenge
+        queryFn: () => getTextChallenge({oneWord, ancient})
     })
 }
 

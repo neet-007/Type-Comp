@@ -22,10 +22,14 @@ export const useGameHook = ({outputRef, inputRef, count, isRunning, setIsRunning
     }
 
     const game = (inputRefValue, outputRefChildren, outPutIndex) => {
-       console.log(letterIndex)
        if (mistakeIndex !== undefined){
+        console.log(inputRefValue[inputRefValue.length - 1] === outputRefChildren[mistakeIndex].innerText)
+        console.log(inputRefValue[inputRefValue.length - 1])
+        console.log(outputRefChildren[mistakeIndex].innerText)
         if (inputRefValue[inputRefValue.length - 1] === outputRefChildren[mistakeIndex].innerText){
             setMistakeIndex(undefined)
+            //console.log(inputRefValue[inputRefValue.length - 1])
+            //console.log(outputRefChildren[mistakeIndex].innerText)
             outputRefChildren[outPutIndex].classList.remove('text-wrong')
 
             if (inputRefValue[inputRefValue.length - 1] === ' ' && mistakeIndex === undefined) {
@@ -40,6 +44,8 @@ export const useGameHook = ({outputRef, inputRef, count, isRunning, setIsRunning
        if (inputRefValue[inputRefValue.length - 1] === outputRefChildren[outPutIndex].innerText){
             if (mistakeIndex !== undefined) setMistakeIndex(undefined)
             outputRefChildren[outPutIndex].classList.remove('text-wrong')
+            //console.log(inputRefValue[inputRefValue.length - 1])
+            //console.log(outputRefChildren[outPutIndex].innerText)
             if (inputRefValue[inputRefValue.length - 1] === ' ' && mistakeIndex === undefined) {
                 inputRef.current.value = ''
                 setPrevData('')
@@ -47,6 +53,8 @@ export const useGameHook = ({outputRef, inputRef, count, isRunning, setIsRunning
         }else{
             if (mistakeIndex === undefined){
                 setMistakeIndex(outPutIndex)
+                //console.log(inputRefValue[inputRefValue.length - 1])
+                //console.log(outputRefChildren[outPutIndex].innerText)
                 outputRefChildren[outPutIndex].classList.add('text-wrong')
                 return
             }
@@ -64,7 +72,7 @@ export const useGameHook = ({outputRef, inputRef, count, isRunning, setIsRunning
         let condition;
         prevData.length > inputRef.current.value.length ?
         condition = 'delete':''
-
+        console.log(condition)
         switch (condition) {
             case 'delete':
                 setPrevAction('delete')

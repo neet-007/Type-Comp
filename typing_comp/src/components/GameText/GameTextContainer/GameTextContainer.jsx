@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import OutputText from '../OutputText/OutputText'
 import './GameTextContainer.css'
 import Timer from '../../Timer/Timer'
+import CSRFTOKEN from '../../shared/CSRFTOKEN/CSRFTOKEN'
 import { useTimer } from '../../../hooks/useTimer'
 import { usePostRace } from '../../../lib/reactQuery/queriesAndMutaions'
 import { useLocation } from 'react-router-dom'
@@ -22,6 +23,7 @@ const GameTextContainer = () => {
 
   return (
     <div className={`gametextcontainer-div`}>
+      <CSRFTOKEN/>
         <span className='d-flex justify-content-between align-items-baseline'>
           <h2 className='cap'>{pathname.replace('/', '')}</h2>
           <Timer time={count}/>

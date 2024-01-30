@@ -27,6 +27,8 @@ class Choices(models.IntegerChoices):
 class TextChallenge(models.Model):
     difficulty = models.IntegerField(default=Choices.EASY, choices=Choices.choices)
     text = models.TextField()
+    ancient = models.BooleanField(default=False, blank=True, null=True, db_index=True)
+    one_word = models.BooleanField(default=False, blank=True, null=True, db_index=True)
     word_count = models.PositiveIntegerField(default=0, db_index=True, blank=True)
     points = models.PositiveIntegerField(default=0, db_index=True, blank=True)
 

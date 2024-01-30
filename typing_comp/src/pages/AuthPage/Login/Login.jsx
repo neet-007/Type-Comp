@@ -3,15 +3,28 @@ import './Login.css'
 import Input from '../../../components/shared/Input/Input'
 import AppButton from '../../../components/shared/AppButton/AppButton'
 import { useLogin } from '../../../lib/reactQuery/queriesAndMutaions'
+import { useAppContext } from '../../../context/Context'
+import { useNavigate } from 'react-router-dom'
+import { getAuthUser } from '../../../lib/axios/axios'
 
 const Login = () => {
+  const navigate = useNavigate()
   const usernameRef = useRef()
   const passwordRef = useRef()
+  const {user, setUser} = useAppContext()
+
+  if (user !== undefined) navigate('/')
   const {mutateAsync:login} = useLogin()
 
   const onSubmit = (e) => {
     e.preventDefault()
-    login({username:usernameRef.current.value, password:passwordRef.current.value})
+    login({username:usernameRef.current.value, password:passwordRef.current.value}).then(res => {
+      if ('error' in res) return console.log(res)
+      getAuthUser().then(res => {
+        if ('error' in res) return setUser(undefined)
+        return setUser(res)
+      })
+    })
   }
 
   const onChange = () => {

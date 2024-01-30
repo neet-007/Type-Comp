@@ -47,7 +47,7 @@ class Login(APIView):
         if data.get('username') and data.get('password'):
             user = authenticate(request, **data)
 
-            if user is not None:
+            if user is not None and UserProfile.objects.filter(user=user).exists():
                 login(request, user)
                 return Response({'success':'login successful'}, status=status.HTTP_200_OK)
 
@@ -77,9 +77,13 @@ class Users(ModelViewSet):
 
     @action(methods=['get', 'put', 'patch', 'delete'], detail=False)
     def me(self, request):
-        profile = self.get_queryset().filter(user=request.user)[0]
+        if not request.user.is_authenticated:
+            return Response({'error':'user is not authenticated'}, status=status.HTTP_200_OK)
+        profile = self.get_queryset().filter(user=request.user)
         if request.method == 'GET':
-            return Response(self.serializer_class(profile).data, status=status.HTTP_200_OK)
+            if profile:
+                return Response(self.serializer_class(profile[0]).data, status=status.HTTP_200_OK)
+            return Response({'error':'user doesnt have profile'}, status=status.HTTP_400_BAD_REQUEST)
 
         if request.method == 'PUT':
             pass
@@ -94,6 +98,21 @@ class Users(ModelViewSet):
 class TextChallengeView(ModelViewSet):
     queryset = TextChallenge.objects.all()
     serializer_class = TextChallengeSerializer
+
+    def get_queryset(self):
+        print(self.request.user)
+        difficulty = self.request.GET.get('diff')
+        one_word = self.request.GET.get('one-word')
+        ancient = self.request.GET.get('ancient')
+        qr = super().get_queryset()
+        if difficulty:
+            qr = qr.filter(difficulty=int(difficulty))
+        if one_word:
+            qr = qr.filter(one_word=True)
+        if ancient:
+            qr = qr.filter(ancient=True)
+
+        return qr
 
 @method_decorator(csrf_exempt, name='dispatch')
 class Raceview(ModelViewSet):

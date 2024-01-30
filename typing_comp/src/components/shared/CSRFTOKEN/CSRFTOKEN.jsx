@@ -23,12 +23,10 @@ const  CSRFToken = () => {
   useEffect(()=>{
     getCSRF().then(() => {
         setCsrfToken(getCookie('csrftoken'))
-        console.log(getCookie('csrftoken'))
-        console.log(Cookies.get('test'))
     })
   },[])
   return (
-    <input type="hidden" name='csrfmiddlewaretoken'  readOnly/>
+    <input type="hidden" name='csrfmiddlewaretoken'  value={csrfToken} readOnly/>
   )
 }
 

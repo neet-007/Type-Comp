@@ -7,6 +7,7 @@ import { Routes, Route } from "react-router-dom"
 import { lazyLoad } from "./utils/lazyLoad"
 import { Suspense } from "react"
 import Card from "./components/Card/Card" 
+import { useLogout } from "./lib/reactQuery/queriesAndMutaions"
 //import MainPage from './pages/MainPage/MainPage'
 //import Navbar from "./components/Navbar/Navbar"
 //import AuthLayout from "./pages/AuthPage/AuthLayout/AuthLayout"
@@ -30,6 +31,7 @@ const Help = lazyLoad("../pages/Help/Help", null)
 const Footer = lazyLoad("../components/Footer/Footer", null)
 function App() {
   const {theme, user} = useAppContext()
+  const {mutateAsync:logout} = useLogout()
   const [themeValue, setTheme ] = theme
   return (
     <main className={themeValue}>
@@ -43,10 +45,12 @@ function App() {
           <Route path="" element={<MainPage/>}/>
           <Route path="/play" element={<GamePage/>}/>
           <Route path="/practice" element={<GamePage/>}/>
+          <Route path="/one-word" element={<GamePage/>}/>
+          <Route path="/ancient" element={<GamePage/>}/>
           <Route path="/profile" element={<Profile/>}/>
           <Route path="/make-profile" element={<MakeProfile/>}/>
       <Route path="/help" element={<Help/>}/>
-     </Routes>
+     </Routes><button onClick={logout}>logout</button>
       </Suspense>
      <Footer/>
     </main>

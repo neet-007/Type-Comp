@@ -11,7 +11,7 @@ const OutputText = ({count, isRunning, setIsRunning, gameDetails, setGameDetails
   if (isError){
     console.log(error)
   }
-  const e = data.text.split("")
+  const e = data[0].text.split("")
   return (
     <>
      <div ref={outputRef}>{e.map((char, i) => {

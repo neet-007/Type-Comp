@@ -1,5 +1,5 @@
 import React,{useState, useEffect, createContext, useContext} from "react";
-import { getUser } from "../lib/axios/axios";
+import { getAuthUser, getUser } from "../lib/axios/axios";
 
 const AppContext = createContext()
 
@@ -20,11 +20,15 @@ export const AppContextProvider = ({children}) => {
     }
 
     useEffect(() => {
-        getUser().then(setUser)
+        getAuthUser().then(res => {
+            if ('error' in res) return setUser(undefined)
+            return setUser(res)
+        })
     },[])
     const value = {
         theme:[themeValue,setTheme],
-        user
+        user,
+        setUser
     }
     return(
         <AppContext.Provider value={value}>

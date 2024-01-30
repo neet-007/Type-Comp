@@ -7,6 +7,7 @@ import Input from '../../../components/shared/Input/Input'
 import AppSelect from '../../../components/shared/AppSelect/AppSelect'
 import { useNavigate } from 'react-router-dom'
 import { usePostUserProfile } from '../../../lib/reactQuery/queriesAndMutaions'
+import CSRFToken from '../../../components/shared/CSRFTOKEN/CSRFTOKEN'
 
 const MakeProfile = () => {
   const {theme} = useAppContext()
@@ -27,8 +28,10 @@ const MakeProfile = () => {
     console.log(lastNameRef.current.value)
     console.log(bioRef.current.value)
     console.log(nationalityRef.current.value)
-    postUserProfile({userId: 2, firstName:firstNameRef.current.value, lastName:lastNameRef.current.value, bio:bioRef.current.value, nationality:nationalityRef.current.value})
-    navigate('/')
+    postUserProfile({firstName:firstNameRef.current.value, lastName:lastNameRef.current.value, bio:bioRef.current.value, nationality:nationalityRef.current.value}).then(res => {
+        if ('error' in res) return console.log(res)
+        navigate('/')
+    })
   }
     const modals = [
         <Modal className={currentIndex !== 0 ? 'hide': ''} title='Choose your name' children={
@@ -57,6 +60,7 @@ const MakeProfile = () => {
     ]
   return (
     <div className={`${theme}-make-profile-div make-profile-div`}>
+        <CSRFToken/>
         {modals.map((modal) => {
           return modal
         })}

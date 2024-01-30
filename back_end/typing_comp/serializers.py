@@ -22,8 +22,6 @@ class UserProfileSerializer(serializers.ModelSerializer):
     def validate(self, attrs):
         if not attrs.get('user_id'):
             user = self.context.get('user')
-            if not user.is_authenticated:
-                raise serializers.ValidationError('user is not authrntaiced')
             attrs['user'] = user
         else:
             user = user_model.objects.filter(pk=attrs.get('user_id'))

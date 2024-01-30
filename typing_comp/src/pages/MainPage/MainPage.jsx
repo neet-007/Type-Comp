@@ -5,7 +5,8 @@ import { useAppContext } from '../../context/Context'
 import { useNavigate } from 'react-router-dom'
 
 const MainPage = () => {
-  const [themeValue] = useAppContext()
+  const {theme} = useAppContext()
+  const [themeValue] = theme
   const navigate = useNavigate()
   return (
     <div className={`${themeValue}-main-page main-page-div`}>

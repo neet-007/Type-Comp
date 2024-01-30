@@ -5,9 +5,10 @@ import ProfileSubCard from './ProfileSubCard/ProfileSubCard'
 import { useAppContext } from '../../context/Context'
 
 const Profile = () => {
-  const [theme] = useAppContext()
+  const {theme} = useAppContext()
+  const [themeValue] = theme
   return (
-    <div className={`${theme}-profile-div profile-div`}>
+    <div className={`${themeValue}-profile-div profile-div`}>
         <ProfileMainCard/>
         <div className='d-flex gap-1'>
             <ProfileSubCard/>

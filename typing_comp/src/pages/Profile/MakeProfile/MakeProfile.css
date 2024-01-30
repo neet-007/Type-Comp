@@ -1,0 +1,9 @@
+.main-theme-make-profile-div{
+    color: black;
+    background-color: var(--clr-secondary);
+}
+.make-profile-div{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}

@@ -4,6 +4,8 @@ export const useGameHook = ({outputRef, inputRef, count, isRunning, setIsRunning
     const [letterIndex, setLetterIndex] = useState(0)
     const [mistakeIndex, setMistakeIndex] = useState(undefined)
     const [prevData, setPrevData] = useState('')
+    // temproray solution to the delete moving index forward
+    const [prevAction ,setPrevAction] = useState(undefined)
 
     const endGame = (outputRefChildren) => {
         if (letterIndex + 1 === outputRefChildren.length && mistakeIndex === undefined){
@@ -20,6 +22,7 @@ export const useGameHook = ({outputRef, inputRef, count, isRunning, setIsRunning
     }
 
     const game = (inputRefValue, outputRefChildren, outPutIndex) => {
+       console.log(letterIndex)
        if (mistakeIndex !== undefined){
         if (inputRefValue[inputRefValue.length - 1] === outputRefChildren[mistakeIndex].innerText){
             setMistakeIndex(undefined)
@@ -37,7 +40,6 @@ export const useGameHook = ({outputRef, inputRef, count, isRunning, setIsRunning
        if (inputRefValue[inputRefValue.length - 1] === outputRefChildren[outPutIndex].innerText){
             if (mistakeIndex !== undefined) setMistakeIndex(undefined)
             outputRefChildren[outPutIndex].classList.remove('text-wrong')
-            console.log(inputRefValue[inputRefValue.length - 1])
             if (inputRefValue[inputRefValue.length - 1] === ' ' && mistakeIndex === undefined) {
                 inputRef.current.value = ''
                 setPrevData('')
@@ -60,24 +62,19 @@ export const useGameHook = ({outputRef, inputRef, count, isRunning, setIsRunning
         }
 
         let condition;
-        inputRef.current.value === '' ?
-        condition = 'reset':
         prevData.length > inputRef.current.value.length ?
         condition = 'delete':''
 
         switch (condition) {
-            case 'reset':
-                //setLetterIndex(0)
-                setPrevData('')
-                console.log('reste')
-                //game(inputRefValue, outputRefChildren, letterIndex)
-                break;
             case 'delete':
+                setPrevAction('delete')
                 setLetterIndex(prev => prev - 1)
                 setPrevData(inputRef.current.value)
-                game(inputRefValue, outputRefChildren, letterIndex)
+                if (prevAction === 'add') game(inputRefValue, outputRefChildren, letterIndex - 1)
+                else game(inputRefValue, outputRefChildren, letterIndex)
                 break;
             default:
+                setPrevAction('add')
                 setLetterIndex(prev => prev + 1)
                 setPrevData(inputRef.current.value)
                 game(inputRefValue, outputRefChildren, letterIndex)
@@ -89,8 +86,8 @@ export const useGameHook = ({outputRef, inputRef, count, isRunning, setIsRunning
         handleAction,
         mistakeIndex,
         indicator:letterIndex - mistakeIndex > -1 ? letterIndex - mistakeIndex: -1 * (letterIndex - mistakeIndex),
-        gameDetails,
-        setGameDetails
+        letterIndex,
+        prevData,
     }
 }
 

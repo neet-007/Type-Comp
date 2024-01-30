@@ -1,8 +1,10 @@
 import React,{useState, useEffect, createContext, useContext} from "react";
+import { getUser } from "../lib/axios/axios";
 
 const AppContext = createContext()
 
 export const AppContextProvider = ({children}) => {
+    const [user, setUser] = useState()
     const [theme, setTheme] = useState()
     let themeValue = ''
     switch (theme) {
@@ -16,8 +18,16 @@ export const AppContextProvider = ({children}) => {
             themeValue = 'main-theme'
             break;
     }
+
+    useEffect(() => {
+        getUser().then(setUser)
+    },[])
+    const value = {
+        theme:[themeValue,setTheme],
+        user
+    }
     return(
-        <AppContext.Provider value={[themeValue,setTheme]}>
+        <AppContext.Provider value={value}>
             {children}
         </AppContext.Provider>
     )

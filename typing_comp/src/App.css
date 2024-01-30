@@ -1,6 +1,6 @@
 *, *::before, *::after {
   box-sizing: border-box;
-  margin: 0;
+  margin: 0; 
   padding: 0;
 }
 h1, h2, h3{
@@ -98,8 +98,14 @@ body{
 .justify-content-between{
   justify-content: space-between;
 }
+.justify-content-center{
+  justify-content: center;
+}
 .align-items-baseline{
   align-items: baseline;
+}
+.align-items-center{
+  align-items: center;
 }
 .invisable-button{
   outline: none;
@@ -114,4 +120,31 @@ body{
 }
 .list-style-none{
   list-style: none;
+}
+.p-1{
+  padding: 1rem;
+}
+.cursor-pointer{
+  cursor: pointer;
+}
+.m-t-auto{
+  margin-top: auto;
+}
+.m-l-auto{
+  margin-left: auto;
+}
+.m-r-auto{
+  margin-right: auto;
+}
+.width-fit-content{
+  width: fit-content;
+}
+.border-1-black{
+  border: 1px solid black;
+}
+.flex-grow-1{
+  flex-grow: 1;
+}
+.hide{
+  display: none;
 }

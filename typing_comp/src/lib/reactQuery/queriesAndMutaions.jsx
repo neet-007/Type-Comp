@@ -1,5 +1,5 @@
 import {useQuery, useMutation} from '@tanstack/react-query'
-import { getTextChallenge, login, logout, postRace, register } from '../axios/axios'
+import { getTextChallenge, getUser, login, logout, postRace, postUserProfile, register } from '../axios/axios'
 
 export const useRegister = () => {
     return useMutation({
@@ -16,6 +16,19 @@ export const useLogin = () => {
 export const useLogout = () => {
     return useMutation({
         mutationFn: () => logout()
+    })
+}
+
+export const usePostUserProfile = () => {
+    return useMutation({
+        mutationFn: ({userId, firstName, lastName, bio, nationality}) => postUserProfile({userId, firstName, lastName, bio, nationality})
+    })
+}
+
+export const useGetUser = () => {
+    return useQuery({
+        queryKey:['get-user'],
+        queryFn:getUser
     })
 }
 

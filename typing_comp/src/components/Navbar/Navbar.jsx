@@ -4,7 +4,8 @@ import { useAppContext } from '../../context/Context'
 import { Link } from 'react-router-dom'
 
 const Navbar = () => {
-  const [themeValue] = useAppContext()
+  const {theme, user}= useAppContext()
+  const [themeValue] = theme
   return (
     <nav className={`${themeValue}-navbar navbar-nav`}>
         <span className='cap'>
@@ -26,6 +27,7 @@ const Navbar = () => {
               <Link to={'/help'}>help</Link>
             </li>
         </ul>
+        {!user &&
         <ul className='navbar-auth-ul cap'>
             <li>
               <Link to={'/register'}>register</Link>
@@ -35,6 +37,7 @@ const Navbar = () => {
               <Link to={'/login'}>login</Link>
             </li>
         </ul>
+        }
     </nav>
   )
 }

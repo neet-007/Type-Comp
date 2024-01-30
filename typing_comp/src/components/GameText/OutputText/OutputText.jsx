@@ -3,7 +3,7 @@ import './OutputText.css'
 import InputText from '../InputText/InputText'
 import { useGameContext } from '../../../context/GameContext'
 
-const OutputText = ({count, isRunning, setIsRunning, gameDetails, setGameDetails}) => {
+const OutputText = ({count, isRunning, setIsRunning, gameDetails, setGameDetails, gameMode}) => {
   const outputRef = useRef()
   const {data, isLoading, isError, error} = useGameContext()
 
@@ -17,7 +17,8 @@ const OutputText = ({count, isRunning, setIsRunning, gameDetails, setGameDetails
      <div ref={outputRef}>{e.map((char, i) => {
         return <span key={char + i}>{char}</span>
       })}</div>
-    <InputText ref={outputRef} count={count} isRunning={isRunning} setIsRunning={setIsRunning} gameDetails={gameDetails} setGameDetails={setGameDetails}/>
+    <InputText ref={outputRef} count={count} isRunning={isRunning} setIsRunning={setIsRunning}
+               gameDetails={gameDetails} setGameDetails={setGameDetails} gameMode={gameMode}/>
     </>
   )
 }

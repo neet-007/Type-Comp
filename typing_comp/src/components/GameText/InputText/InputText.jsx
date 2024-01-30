@@ -1,16 +1,19 @@
 import React, { useRef, forwardRef} from 'react'
 import './InputText.css'
 import { useGameHook } from '../../../hooks/useGameHook'
-
-const InputText = forwardRef(({count, isRunning, setIsRunning, gameDetails, setGameDetails}, ref) => {
+ 
+const InputText = forwardRef(({count, isRunning, setIsRunning, gameDetails, setGameDetails, gameMode}, ref) => {
     const inputRef = useRef()
-    const {handleAction, mistakeIndex, indicator} = useGameHook({inputRef, outputRef:ref, count, isRunning, setIsRunning, gameDetails, setGameDetails})
+    const {handleAction, mistakeIndex, indicator, letterIndex, prevData} = useGameHook({inputRef, outputRef:ref, count, isRunning, setIsRunning, gameDetails, setGameDetails})
 
 
     if (inputRef.current !== undefined){
       if (indicator > 3){
         inputRef.current.maxLength = mistakeIndex
-      }else{
+      }else if(letterIndex === ref.current.children.length){
+        inputRef.current.maxLength = prevData.length
+      }
+      else{
         inputRef.current.maxLength = 524288
       }
     }

@@ -4,7 +4,8 @@ import { useAppContext } from '../../context/Context'
 import AppButton from '../shared/AppButton/AppButton'
 
 const Card = ({title='title', text, buttonLable='card button', buttonOnClick, horizontal, noButton}) => {
-  const [themeValue] = useAppContext()
+  const {theme}= useAppContext()
+  const [themeValue] = theme
   return (
     <article className={`${themeValue}-card card-article ${horizontal ? 'card-article-horizontal': 'card-article-vertical'}`}>
         <h2 className='title cap'>{title}</h2>

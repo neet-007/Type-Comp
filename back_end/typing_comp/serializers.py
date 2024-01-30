@@ -8,14 +8,32 @@ class UserSerializer(serializers.ModelSerializer):
 
 class UserProfileSerializer(serializers.ModelSerializer):
     user = UserSerializer(required=False)
+    user_id = serializers.IntegerField(required=False)
 
     class Meta:
         model = UserProfile
         fields = '__all__'
-        extra_kwargs = {'average_speed':{'required':False}, 'top_speed':{'required':False}, 'average_speed_last_ten':{'required':False}, 'races_won':{'required':False}}
+        extra_kwargs = {'average_speed':{'required':False}, 'top_speed':{'required':False},
+                        'average_speed_last_ten':{'required':False}, 'races_won':{'required':False},
+                        'first_name':{'required':False}, 'last_name':{'required':False},
+                        'nationality':{'required':False}, 'bio':{'required':False},}
 
 
-    def create(self, validated_data):
+    def validate(self, attrs):
+        if not attrs.get('user_id'):
+            user = self.context.get('user')
+            if not user.is_authenticated:
+                raise serializers.ValidationError('user is not authrntaiced')
+            attrs['user'] = user
+        else:
+            user = user_model.objects.filter(pk=attrs.get('user_id'))
+            if not user:
+                raise serializers.ValidationError('user not found')
+
+            attrs['user'] = user[0]
+        return super().validate(attrs)
+
+    """def create(self, validated_data):
         if not validated_data.get('user'):
             user = self.context.get('user')
             if not user.is_authenticated:
@@ -23,6 +41,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
             validated_data['user'] = user
 
         return super().create(validated_data)
+    """
 
 class TextChallengeSerializer(serializers.ModelSerializer):
     class Meta:

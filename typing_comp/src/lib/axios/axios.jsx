@@ -1,5 +1,5 @@
 import axios from 'axios'
-
+ 
 const api = axios.create({
     baseURL:'http://127.0.0.1:8000/api/'
 }
@@ -47,6 +47,26 @@ export const login = async ({username, password}) => {
 export const logout = async () => {
     try {
         let res = await api.post('/auth/logout')
+        console.log(res.data)
+        return res.data
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const postUserProfile = async ({userId, firstName, lastName, bio, nationality}) => {
+    try {
+        let res = await api.post('/auth/users/', {user_id:userId, bio, first_name:firstName, last_name:lastName, nationality})
+        console.log(res)
+         return res.data
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const getUser = async () => {
+    try {
+        let res = await api.get('/get-user')
         console.log(res.data)
         return res.data
     } catch (error) {

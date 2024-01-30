@@ -12,7 +12,10 @@ class UserProfile(models.Model):
     top_speed = models.DecimalField(default=0, blank=True, decimal_places=2, max_digits=4)
     average_speed_last_ten = models.DecimalField(default=0, blank=True, decimal_places=2, max_digits=4)
     races_won = models.PositiveBigIntegerField(default=0, blank=True, db_index=True)
-
+    first_name = models.CharField(max_length=125, blank=True, null=True)
+    last_name = models.CharField(max_length=125, blank=True, null=True)
+    nationality = models.CharField(max_length=125, blank=True, null=True)
+    bio = models.CharField(max_length=255, blank=True, null=True)
     def __str__(self) -> str:
          return f'{self.user.username}'
 

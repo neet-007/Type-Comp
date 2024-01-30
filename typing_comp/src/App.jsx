@@ -6,7 +6,7 @@ import { useAppContext } from "./context/Context"
 import { Routes, Route } from "react-router-dom"
 import { lazyLoad } from "./utils/lazyLoad"
 import { Suspense } from "react"
-import Card from "./components/Card/Card"
+import Card from "./components/Card/Card" 
 //import MainPage from './pages/MainPage/MainPage'
 //import Navbar from "./components/Navbar/Navbar"
 //import AuthLayout from "./pages/AuthPage/AuthLayout/AuthLayout"
@@ -16,6 +16,8 @@ import Card from "./components/Card/Card"
 //import Footer from "./components/Footer/Footer"
 //import Help from "./pages/Help/Help"
 //import Profile from "./pages/Profile/Profile"
+//import MakeProfile from "./pages/Profile/MakeProfile/MakeProfile"
+
 const MainPage = lazyLoad("../pages/MainPage/MainPage", null)
 const Navbar = lazyLoad("../components/Navbar/Navbar", null)
 const AuthLayout = lazyLoad("../pages/AuthPage/AuthLayout/AuthLayout", null)
@@ -23,10 +25,12 @@ const Login = lazyLoad("../pages/AuthPage/Login/Login", null)
 const Register = lazyLoad("../pages/AuthPage/Resgister/Register", null)
 const GamePage = lazyLoad("../pages/GamePage/GamePage", null)
 const Profile = lazyLoad("../pages/Profile/Profile", null)
+const MakeProfile = lazyLoad("../pages/Profile/MakeProfile/MakeProfile", null)
 const Help = lazyLoad("../pages/Help/Help", null)
 const Footer = lazyLoad("../components/Footer/Footer", null)
 function App() {
-  const [themeValue, setTheme] = useAppContext()
+  const {theme, user} = useAppContext()
+  const [themeValue, setTheme ] = theme
   return (
     <main className={themeValue}>
      <Navbar/>
@@ -40,6 +44,7 @@ function App() {
           <Route path="/play" element={<GamePage/>}/>
           <Route path="/practice" element={<GamePage/>}/>
           <Route path="/profile" element={<Profile/>}/>
+          <Route path="/make-profile" element={<MakeProfile/>}/>
       <Route path="/help" element={<Help/>}/>
      </Routes>
       </Suspense>

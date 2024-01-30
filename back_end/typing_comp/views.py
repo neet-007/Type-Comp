@@ -106,3 +106,7 @@ class Raceview(ModelViewSet):
 
         return context
 
+@method_decorator(csrf_exempt, name='dispatch')
+class GetUser(APIView):
+    def get(self, request):
+        return Response(UserProfileSerializer(UserProfile.objects.get(user__pk=2)).data, status=status.HTTP_200_OK)
